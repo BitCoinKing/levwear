@@ -1,26 +1,76 @@
+/* Tailwind (v4-ready) */
 @import "tailwindcss";
 
+/* ===== Brand Tokens ===== */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Core palette */
+  --lev-black: #0B0B0C;
+  --lev-slate: #0F172A;
+  --lev-slate-2: #1E293B;
+  --lev-white: #FFFFFF;
+  --lev-blue:  #2563EB;
+
+  /* Shadcn/ui variables (light) */
+  --background: var(--lev-white);
+  --foreground: var(--lev-black);
+  --card: var(--lev-white);
+  --card-foreground: var(--lev-black);
+  --popover: var(--lev-white);
+  --popover-foreground: var(--lev-black);
+  --primary: var(--lev-blue);
+  --primary-foreground: var(--lev-white);
+  --secondary: var(--lev-slate-2);
+  --secondary-foreground: var(--lev-white);
+  --muted: var(--lev-slate-2);
+  --muted-foreground: var(--lev-slate);
+  --accent: var(--lev-blue);
+  --accent-foreground: var(--lev-white);
+  --destructive: #ef4444;
+  --destructive-foreground: var(--lev-white);
+  --border: color-mix(in srgb, var(--lev-white) 14%, var(--lev-black));
+  --input: var(--lev-slate-2);
+  --ring: var(--lev-blue);
+
+  --radius: 0.75rem;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Dark theme tokens */
+.dark {
+  --background: var(--lev-black);
+  --foreground: var(--lev-white);
+  --card: var(--lev-slate);
+  --card-foreground: var(--lev-white);
+  --popover: var(--lev-slate);
+  --popover-foreground: var(--lev-white);
+  --border: color-mix(in srgb, var(--lev-slate-2) 60%, #000);
+  --input: var(--lev-slate-2);
 }
 
-@media (prefers-color-scheme: dark) {
+/* ===== Base Resets & Brand Base ===== */
+@layer base {
+  /* IMPORTANT: no global borders/outlines on * */
+  html, body {
+    min-height: 100%;
+    background: var(--background);
+    color: var(--foreground);
+  }
+
+  /* Smooth fonts */
+  body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+  /* Use radius token */
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --radius-sm: calc(var(--radius) - 0.25rem);
+    --radius-lg: calc(var(--radius) + 0.25rem);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ===== Utilities ===== */
+@layer utilities {
+  .container-lev { @apply container mx-auto px-4 md:px-6 max-w-[1280px]; }
+  .section-y    { @apply py-12 md:py-20; }
+  .headline     { @apply font-[var(--font-outfit,_inherit)] text-4xl md:text-6xl leading-tight; }
+  .subhead      { @apply text-base md:text-lg text-white/80; }
+  .btn-primary  { @apply inline-flex items-center justify-center rounded-2xl px-6 py-3 bg-white text-black font-medium hover:bg-white/90 transition; }
+  .btn-ghost    { @apply inline-flex items-center justify-center rounded-2xl px-6 py-3 text-white/85 hover:bg-white/5 transition; }
 }
