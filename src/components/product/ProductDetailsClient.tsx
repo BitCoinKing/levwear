@@ -9,7 +9,6 @@ import Section from '@/components/section';
 import PageTitle from '@/components/page-title';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { fadeInUp, stagger } from '@/lib/motion';
 
 // Define the type for a product based on the shopify.ts structure
@@ -115,18 +114,19 @@ const ProductDetailsClient: React.FC<ProductDetailsClientProps> = ({ product }) 
               {product.variants.length > 1 && (
                 <div className='mb-6'>
                   <h3 className='text-lg font-semibold mb-2'>Select Options:</h3>
-                  <Select value={selectedVariant?.id} onValueChange={handleVariantChange}>
-                    <SelectTrigger className='w-full md:w-[280px]'>
-                      <SelectValue placeholder='Select a variant' />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {product.variants.map((variant) => (
-                        <SelectItem key={variant.id} value={variant.id}>
-                          {variant.title} - {variant.price} {variant.currencyCode}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  <select
+                    value={selectedVariant?.id}
+                    onChange={(e) => handleVariantChange(e.target.value)}
+                    className='w-full md:w-[280px] p-2 border border-gray-300 rounded-md bg-background text-foreground'
+                    aria-label='Select product variant'
+                  >
+                    <option value=''>Select a variant</option>
+                    {product.variants.map((variant) => (
+                      <option key={variant.id} value={variant.id}>
+                        {variant.title} - {variant.price} {product.currencyCode}
+                      </option>
+                    ))}
+                  </select>
                 </div>
               )}
 
