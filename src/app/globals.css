@@ -141,4 +141,18 @@
       transform: translateX(2px);
     } /* tiny optical nudge */
   }
+
+  /* Prevent LEV • WEAR wrapping on mobile */
+  .nav-logo {
+    white-space: nowrap;
+    display: inline-block;
+  }
+
+  /* Slightly tighter tracking on small screens to fit in one line */
+  @media (max-width: 480px) {
+    .nav-logo {
+      letter-spacing: 0.15em;
+      font-size: 0.9rem;
+    }
+  }
 }
