@@ -1,98 +1,109 @@
-'use client';
+'use client'
 
-import React from 'react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { motion } from 'framer-motion';
-import { Menu, X } from 'lucide-react';
-import { useMounted } from '@/lib/use-mounted';
-import { cn } from '@/lib/utils';
-import { Button, buttonVariants } from '@/components/ui/button';
-import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  navigationMenuTriggerStyle,
-} from '@/components/ui/navigation-menu';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { useMounted } from '@/lib/use-mounted'
+import { Menu } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
+import { motion } from 'framer-motion'
 
-const navLinks = [
-  { title: 'Shop', href: '/shop' },
-  { title: 'Men', href: '/men' },
-  { title: 'Women', href: '/women' },
-  { title: 'Drops', href: '/drops' },
-  { title: 'Journal', href: '/journal' },
-  { title: 'About', href: '/about' },
-];
+const NAV = [
+  { href: '/shop', label: 'Shop' },
+  { href: '/men', label: 'Men' },
+  { href: '/women', label: 'Women' },
+  { href: '/drops', label: 'Drops' },
+  { href: '/journal', label: 'Journal' },
+  { href: '/about', label: 'About' },
+]
 
-const Navbar = () => {
-  const pathname = usePathname();
-  const [isOpen, setIsOpen] = React.useState(false);
-  const mounted = useMounted();
-  if (!mounted) return null; // avoid SSR/CSR ID mismatches
+export default function Navbar() {
+  const mounted = useMounted()
+  const pathname = usePathname()
+  if (!mounted) return null // avoid SSR/CSR id mismatch
 
   return (
     <motion.header
-      initial={false}              // <-- critical: no SSR vs CSR diff
-      animate={{ y: 0, opacity: 1 }}
-      className="sticky top-0 z-40 backdrop-blur supports-[backdrop-filter]:bg-black/30"
+      initial={false}
+      className='sticky top-0 z-50 border-b border-white/10
+                 supports-[backdrop-filter]:bg-black/30 backdrop-blur'
     >
-      <div className='container flex h-16 items-center justify-between'>
-        {/* Logo */}
-        <Link href='/' className='text-2xl font-bold text-foreground'>
-          LEV • WEAR
-        </Link>
+      {/* scroll shadow */}
+      <div className='pointer-events-none absolute inset-x-0 top-full h-px bg-gradient-to-r from-transparent via-white/15 to-transparent' />
 
-        {/* Desktop Navigation */}
-        <NavigationMenu className='hidden lg:flex'>
-          <NavigationMenuList>
-            {navLinks.map((link) => (
-              <NavigationMenuItem key={link.title}>
-                <NavigationMenuLink
-                  href={link.href}
-                  className={cn(
-                    navigationMenuTriggerStyle(),
-                    pathname === link.href && 'bg-accent text-accent-foreground',
-                  )}
-                >
-                  {link.title}
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-            ))}
-          </NavigationMenuList>
-        </NavigationMenu>
+      <div className='container-lev h-16 grid grid-cols-3 items-center'>
+        {/* Left: mobile menu */}
+        <div className='flex lg:hidden'>
+          <MobileMenu pathname={pathname} />
+        </div>
 
-        {/* Mobile Navigation */}
-        <Sheet open={isOpen} onOpenChange={setIsOpen}>
-          <SheetTrigger asChild className='lg:hidden'>
-            <Button variant='ghost' size='icon'>
-              <Menu className='size-6' />
-              <span className='sr-only'>Toggle Menu</span>
-            </Button>
-          </SheetTrigger>
-          <SheetContent side='right' className='w-[300px] sm:w-[400px]'>
-            <nav className='flex flex-col gap-4 pt-8'>
-              {navLinks.map((link) => (
-                <Link
-                  key={link.title}
-                  href={link.href}
-                  className={cn(
-                    buttonVariants({ variant: 'ghost' }),
-                    'w-full justify-start',
-                    pathname === link.href && 'bg-accent text-accent-foreground',
-                  )}
-                  onClick={() => setIsOpen(false)}
-                >
-                  {link.title}
-                </Link>
-              ))}
-            </nav>
-          </SheetContent>
-        </Sheet>
+        {/* Center: LOGO */}
+        <div className='flex items-center justify-center'>
+          <Link
+            href='/'
+            className='select-none tracking-[0.22em] text-sm md:text-base font-semibold
+                       text-white/90 hover:text-white transition'
+            aria-label='LEV WEAR home'
+          >
+            LEV &nbsp;•&nbsp; WEAR
+          </Link>
+        </div>
+
+        {/* Right: desktop nav */}
+        <nav className='hidden lg:flex items-center justify-end gap-6'>
+          {NAV.map((item) => {
+            const active = pathname?.startsWith(item.href)
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className='relative text-sm text-white/80 hover:text-white transition'
+              >
+                {item.label}
+                {/* Animated underline */}
+                <motion.span
+                  layout
+                  className='absolute -bottom-1 left-0 h-[2px] bg-white/80'
+                  initial={false}
+                  animate={{ width: active ? '100%' : 0 }}
+                  transition={{ type: 'spring', stiffness: 400, damping: 35 }}
+                />
+              </Link>
+            )
+          })}
+        </nav>
       </div>
     </motion.header>
-  );
-};
+  )
+}
 
-export default Navbar;
+function MobileMenu({ pathname }: { pathname: string | null }) {
+  return (
+    <Sheet>
+      <SheetTrigger asChild>
+        <Button variant='ghost' size='icon' aria-label='Open menu'>
+          <Menu className='h-5 w-5' />
+        </Button>
+      </SheetTrigger>
+      <SheetContent side='left' className='bg-background/95 backdrop-blur'>
+        <SheetHeader>
+          <SheetTitle className='tracking-[0.22em] text-white/90'>LEV • WEAR</SheetTitle>
+        </SheetHeader>
+        <div className='mt-6 flex flex-col gap-3'>
+          {NAV.map((item) => {
+            const active = pathname?.startsWith(item.href)
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`text-base ${active ? 'text-white' : 'text-white/80'}`}
+              >
+                {item.label}
+              </Link>
+            )
+          })}
+        </div>
+      </SheetContent>
+    </Sheet>
+  )
+}
