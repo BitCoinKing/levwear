@@ -151,8 +151,8 @@ const DesignSystemPage = () => {
         <div className='mb-8 rounded-lg border p-6'>
           <h3 className='mb-4'>CTAButton Variants</h3>
           <div className='flex flex-wrap gap-4'>
-            <Button variant='default'>Primary CTA</Button>
-            <Button variant='secondary'>Secondary CTA</Button>
+            <Button variant='ctaPrimary'>Primary CTA</Button>
+            <Button variant='ctaSecondary'>Secondary CTA</Button>
             <Button variant='default'>Default Button</Button>
             <Button variant='outline'>Outline Button</Button>
           </div>
