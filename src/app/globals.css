@@ -87,8 +87,10 @@
     @apply inline-flex items-center justify-center rounded-2xl px-6 py-3 bg-white text-black font-medium hover:bg-white/90 transition;
   }
   .btn-ghost {
-    @apply inline-flex items-center justify-center rounded-2xl px-6 py-3 text-white/85 hover:bg-white/5 transition;
+    @apply inline-flex items-center justify-center rounded-2xl px-6 py-3 ring-1 ring-white/20 hover:bg-white/5 transition;
   }
+
+  /* Cinematic hero spotlight (soft gradient bloom) */
   .hero-spotlight {
     position: relative;
     isolation: isolate;
@@ -96,11 +98,47 @@
   .hero-spotlight::before {
     content: '';
     position: absolute;
-    inset: -10% -10% auto -10%;
-    height: 480px;
-    background: radial-gradient(60% 60% at 30% 20%, rgba(37, 99, 235, 0.18), transparent 60%);
-    filter: blur(30px);
+    inset: 0;
+    background:
+      radial-gradient(60% 50% at 25% 10%, rgba(37, 99, 235, 0.18), transparent 60%),
+      radial-gradient(40% 40% at 60% 0%, rgba(255, 255, 255, 0.06), transparent 70%);
+    filter: blur(18px);
     z-index: -1;
     pointer-events: none;
+  }
+
+  /* Magnetic / tactile feel (subtle hover scale) */
+  .cta-magnetic {
+    @apply relative will-change-transform;
+  }
+  .cta-magnetic:hover {
+    transform: translateZ(0) scale(1.03);
+  }
+  .cta-magnetic:active {
+    transform: translateZ(0) scale(0.98);
+  }
+
+  /* Slow pulse for background shimmer */
+  @keyframes pulse-slow {
+    0%,
+    100% {
+      opacity: 0.85;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+  .animate-pulse-slow {
+    animation: pulse-slow 6s ease-in-out infinite;
+  }
+
+  /* Optical centering for logo on large screens */
+  .nav-logo {
+    letter-spacing: 0.22em;
+  }
+  @media (min-width: 1024px) {
+    .nav-logo {
+      transform: translateX(2px);
+    } /* tiny optical nudge */
   }
 }

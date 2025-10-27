@@ -20,15 +20,13 @@ const NAV = [
 export default function Navbar() {
   const mounted = useMounted()
   const pathname = usePathname()
-  if (!mounted) return null // avoid SSR/CSR id mismatch
+  if (!mounted) return null
 
   return (
     <motion.header
       initial={false}
-      className='sticky top-0 z-50 border-b border-white/10
-                 supports-[backdrop-filter]:bg-black/30 backdrop-blur'
+      className='sticky top-0 z-50 border-b border-white/10 supports-[backdrop-filter]:bg-black/30 backdrop-blur'
     >
-      {/* scroll shadow */}
       <div className='pointer-events-none absolute inset-x-0 top-full h-px bg-gradient-to-r from-transparent via-white/15 to-transparent' />
 
       <div className='container-lev h-16 grid grid-cols-3 items-center'>
@@ -37,12 +35,11 @@ export default function Navbar() {
           <MobileMenu pathname={pathname} />
         </div>
 
-        {/* Center: LOGO */}
+        {/* Centered Logo (optically balanced) */}
         <div className='flex items-center justify-center'>
           <Link
             href='/'
-            className='select-none tracking-[0.22em] text-sm md:text-base font-semibold
-                       text-white/90 hover:text-white transition'
+            className='nav-logo select-none text-sm md:text-base font-semibold text-white/90 hover:text-white transition'
             aria-label='LEV WEAR home'
           >
             LEV &nbsp;•&nbsp; WEAR
@@ -60,7 +57,6 @@ export default function Navbar() {
                 className='relative text-sm text-white/80 hover:text-white transition'
               >
                 {item.label}
-                {/* Animated underline */}
                 <motion.span
                   layout
                   className='absolute -bottom-1 left-0 h-[2px] bg-white/80'

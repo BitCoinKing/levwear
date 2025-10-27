@@ -1,5 +1,8 @@
+'use client'
+
 import Link from 'next/link'
 import ProductCard from '../components/ProductCard'
+import { motion } from 'framer-motion'
 
 const features = [
   {
@@ -39,24 +42,29 @@ export default function Home() {
   // Minor change to trigger a commit and push
   return (
     <>
-      {/* HERO */}
+      {/* HERO (cinematic) */}
       <section className='section-y hero-spotlight'>
         <div className='container-lev'>
-          <div className='max-w-3xl'>
+          <motion.div
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: 'easeOut' }}
+            className='max-w-3xl'
+          >
             <h1 className='headline'>Elevate Every Rep.</h1>
             <p className='subhead mt-4'>
               Premium athletic wear designed for performance, minimal aesthetics, and built-to-order
               quality.
             </p>
             <div className='mt-8 flex gap-4'>
-              <Link href='/shop' className='btn-primary'>
-                Shop the Drop
+              <Link href='/shop' className='btn-primary cta-magnetic'>
+                <span>Shop the Drop</span>
               </Link>
-              <Link href='/journal' className='btn-ghost'>
-                Join the Journal
+              <Link href='/journal' className='btn-ghost cta-magnetic'>
+                <span>Join the Journal</span>
               </Link>
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
