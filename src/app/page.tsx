@@ -36,6 +36,7 @@ const products = [
 ]
 
 export default function Home() {
+  // Minor change to trigger a commit and push
   return (
     <>
       {/* HERO */}
