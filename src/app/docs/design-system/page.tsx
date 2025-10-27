@@ -15,12 +15,12 @@ const DesignSystemPage = () => {
   return (
     <Container>
       <Section className='text-center'>
-        <PageTitle level='display' className='mb-4'>
-          LEV WEAR Design System
-        </PageTitle>
-        <p className='lead text-muted-foreground'>
-          A comprehensive guide to the LEV WEAR brand's visual language and components.
-        </p>
+          <PageTitle level='display' className='mb-4'>
+            LEV WEAR Design System
+          </PageTitle>
+          <p className='lead text-muted-foreground'>
+            A comprehensive guide to the LEV WEAR brand's visual language and components.
+          </p>
       </Section>
 
       {/* Color Palette */}
@@ -151,8 +151,8 @@ const DesignSystemPage = () => {
         <div className='mb-8 rounded-lg border p-6'>
           <h3 className='mb-4'>CTAButton Variants</h3>
           <div className='flex flex-wrap gap-4'>
-            <Button variant='ctaPrimary'>Primary CTA</Button>
-            <Button variant='ctaSecondary'>Secondary CTA</Button>
+            <Button variant='default'>Primary CTA</Button>
+            <Button variant='secondary'>Secondary CTA</Button>
             <Button variant='default'>Default Button</Button>
             <Button variant='outline'>Outline Button</Button>
           </div>
